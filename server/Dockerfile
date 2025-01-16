@@ -15,5 +15,5 @@ COPY . .
 # expose port
 EXPOSE 8080
 
-# start the app
-CMD [ "npm", "start" ]
+# start the app using nodemon
+CMD ["npm", "run", "dev"]
