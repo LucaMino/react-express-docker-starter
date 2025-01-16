@@ -33,7 +33,6 @@ docker-compose up -d --build
 ---
 
 ### Utils docker commands
-To create a new Express app:
 ```bash
 docker exec -it <container_id> sh
 docker-compose run --rm client npm install axios
