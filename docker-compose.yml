@@ -12,6 +12,8 @@ services:
     volumes:
       - ./server:/app
       - /app/node_modules
+    depends_on:
+      - mysql
 
   client:
     build:
@@ -24,3 +26,20 @@ services:
     volumes:
       - ./client:/app
       - /app/node_modules
+
+  mysql:
+    image: mariadb:10.6
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - dbdata:/var/lib/mysql
+
+volumes:
+  dbdata:
