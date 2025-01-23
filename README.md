@@ -37,3 +37,11 @@ docker-compose up -d --build
 docker exec -it <container_id> sh
 docker-compose run --rm client npm install axios
 ```
+
+
+npx sequelize-cli migration:generate --name create-users-table
+docker-compose run --rm server npx sequelize-cli migration:generate --name create-users-table
+
+npx sequelize-cli db:migrate
+docker-compose run --rm server npx sequelize-cli db:migrate
+
