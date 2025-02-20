@@ -45,3 +45,8 @@ docker-compose run --rm server npx sequelize-cli migration:generate --name creat
 npx sequelize-cli db:migrate
 docker-compose run --rm server npx sequelize-cli db:migrate
 
+```bash
+# rollback
+docker-compose run --rm server npx sequelize-cli db:migrate:undo:all
+```
+

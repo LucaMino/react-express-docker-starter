@@ -22,7 +22,7 @@ const Home = () => {
 
             <ul>
                 {data && data.map((item, index) => (
-                    <li key={index}>{item}</li>
+                    <li key={index}>{item.name}</li>
                 ))}
             </ul>
         </div>
