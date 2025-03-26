@@ -48,5 +48,6 @@ docker-compose run --rm server npx sequelize-cli db:migrate
 ```bash
 # rollback
 docker-compose run --rm server npx sequelize-cli db:migrate:undo:all
+docker-compose run --rm server npm install express-validator
 ```
 

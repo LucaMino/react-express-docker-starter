@@ -30,6 +30,7 @@ db.authenticate()
     });
 
 app.use(cors(corsOptions));
+app.use(express.json());
 app.use(routes);
 
 // start the server and listen on specific port
