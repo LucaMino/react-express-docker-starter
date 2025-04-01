@@ -9,13 +9,19 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import PublicRoute from './components/routes/PublicRoute';
 import PrivateRoute from './components/routes/PrivateRoute';
+import { useAuth } from './contexts/AuthContext';
 
 const App = () => {
     const { pathname } = useLocation();
     const authRoutes = ['/login', '/register'];
+    const { user } = useAuth();
 
     useEffect(() => {
+        console.log('user1')
+        // const { user } = useAuth();
+
         console.log('user')
+        console.log(user)
     }, []);
 
     return (
@@ -26,9 +32,10 @@ const App = () => {
                     <Route element={<PublicRoute />}>
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
+                        <Route path="/" element={<Home />} />
                     </Route>
                     <Route element={<PrivateRoute />}>
-                        <Route path="/" element={<Home />} />
+                        {/* <Route path="/" element={<Home />} /> */}
                     </Route>
                 </Routes>
             </main>

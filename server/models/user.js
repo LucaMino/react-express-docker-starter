@@ -1,10 +1,25 @@
-import { DataTypes } from 'sequelize';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import sequelize from '../config/database.js'
+import { Model, DataTypes } from 'sequelize';
 
-const User = sequelize.define(
-    'User',
+class User extends Model
+{
+    // Returns true if the given password matches the user's password
+    async comparePassword(password)
+    {
+        return await bcrypt.compare(password, this.password);
+    }
+
+    // Hashes the given password and returns the hashed password
+    async hashPassword(password)
+    {
+        const salt = await bcrypt.genSalt();
+        return await bcrypt.hash(password, salt);
+    }
+}
+
+User.init
+(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -28,32 +43,18 @@ const User = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
+
     },
     {
-        sequelize,              // db connection
-        modelName: 'User',      // model name
-        tableName: 'users',     // table name
-        timestamps: true,       // add createdAt and updatedAt
-        paranoid: true          // add deletedAt (soft delete)
+        sequelize,                  // db connection
+        modelName: 'User',          // model name
+        tableName: 'users',         // table name
+        timestamps: true,           // add createdAt and updatedAt
+        paranoid: true,             // add deletedAt (soft delete)
+        underscored: true,          // use snake_case for column names
+        createdAt: 'created_at',    // custom column name
+        updatedAt: 'updated_at',    // custom column name
     }
-);
-
-// hash password
-User.hashPassword = async (password) => {
-    const salt = await bcrypt.genSalt(10);
-    return await bcrypt.hash(password, salt);
-};
-
-// compare password
-User.prototype.comparePassword = async function (password) {
-    return await bcrypt.compare(password, this.password);
-};
-
-// generate JWT token
-User.prototype.generateAuthToken = function (refreshToken = false) {
-    const expiresIn = refreshToken ? '7d' : '1h';
-    const token = jwt.sign({ id: this.id }, process.env.JWT_SECRET, { expiresIn: expiresIn });
-    return token;
-};
+)
 
 export default User;

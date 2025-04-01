@@ -1,8 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import passport from 'passport';
 import db from './config/database.js';
 import routes from './routes/routes.js';
+import sessionMiddleware from './config/session.js';
 
 // load env vars
 dotenv.config();
@@ -29,8 +31,16 @@ db.authenticate()
         console.error('Unable to connect to the database:', err);
     });
 
+// configure session
+app.use(sessionMiddleware);
+// initialize passport and session
+app.use(passport.initialize());
+app.use(passport.session());
+// enable cors
 app.use(cors(corsOptions));
+// set express to parse json body (req.body)
 app.use(express.json());
+// set routes
 app.use(routes);
 
 // start the server and listen on specific port

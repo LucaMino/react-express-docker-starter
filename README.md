@@ -51,3 +51,8 @@ docker-compose run --rm server npx sequelize-cli db:migrate:undo:all
 docker-compose run --rm server npm install express-validator
 ```
 
+
+docker-compose run --rm server npm install passport-local
+docker-compose run --rm server npm install express-session
+docker-compose run --rm server npm install express-mysql-session
+

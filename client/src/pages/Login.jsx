@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useAuth } from "../contexts/AuthContext";
 import axios from 'axios';
 
 const Login = () => {
+    const { login } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -11,16 +13,12 @@ const Login = () => {
         // reset error
         setError(null);
 
-        console.log(email, password);
-
         axios.post('/auth/login', { email, password })
             .then(response => {
-                const jwtToken = response.data.token;
-                const refreshToken = response.data.refreshToken;
-                // set jwt token in cookie
-                // document.cookie = `jwtToken=${jwtToken}; path=/; secure; HttpOnly; SameSite=Strict;`;
-                // document.cookie = `refreshToken=${refreshToken}; path=/; secure; HttpOnly; SameSite=Strict;`;
-                console.log(jwtToken);
+                // save user on react context
+                console.log('after login')
+                console.log(response.data.user)
+                login(response.data.user);
                 // window.location.href = '/';
             })
             .catch(error => console.log(error))
