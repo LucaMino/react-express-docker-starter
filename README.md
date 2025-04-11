@@ -35,24 +35,13 @@ docker-compose up -d --build
 ### Utils docker commands
 ```bash
 docker exec -it <container_id> sh
+# example npm install
 docker-compose run --rm client npm install axios
-```
-
-
-npx sequelize-cli migration:generate --name create-users-table
+docker-compose run --rm server npm install passport-local
+# create migration
 docker-compose run --rm server npx sequelize-cli migration:generate --name create-users-table
-
-npx sequelize-cli db:migrate
+# run migrations
 docker-compose run --rm server npx sequelize-cli db:migrate
-
-```bash
 # rollback
 docker-compose run --rm server npx sequelize-cli db:migrate:undo:all
-docker-compose run --rm server npm install express-validator
 ```
-
-
-docker-compose run --rm server npm install passport-local
-docker-compose run --rm server npm install express-session
-docker-compose run --rm server npm install express-mysql-session
-
