@@ -1,5 +1,5 @@
 import { check } from 'express-validator';
-import User from '../models/user.js';
+import User from '../models/user.model.js';
 
 // login validation
 export const loginValidation = [
@@ -12,8 +12,7 @@ export const registerValidation = [
     check('email', 'Invalid email').isEmail(),
     check('email').custom(async (email) => {
         const user = await User.findOne({ email });
-        if(user)
-        {
+        if(user) {
             throw new Error('Email already exists');
         }
     }),

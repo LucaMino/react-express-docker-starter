@@ -1,24 +1,30 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 
+// defines a context to share auth state (like isAuthenticated) across the app without prop drilling
 const AuthContext = createContext();
 
+// children are the components you are wrapping inside the <AuthProvider>
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(() => {
-        // Prova a prendere l'utente dal localStorage
-        const storedUser = localStorage.getItem("user");
+        // get user from local storage
+        const storedUser = localStorage.getItem('user');
+        // if user is in local storage, return it
         return storedUser ? JSON.parse(storedUser) : null;
     });
 
+    // set user on local storage
     const login = (userData) => {
         setUser(userData);
-        localStorage.setItem("user", JSON.stringify(userData)); // Salva in localStorage
+        localStorage.setItem('user', JSON.stringify(userData));
     };
 
+    // remove user from local storage
     const logout = () => {
         setUser(null);
-        localStorage.removeItem("user"); // Rimuove l'utente
+        localStorage.removeItem('user');
     };
 
+    // AuthContext.Provider makes the user, login(), and logout() available to all child components via the context
     return (
         <AuthContext.Provider value={{ user, login, logout }}>
             {children}
@@ -26,11 +32,13 @@ export const AuthProvider = ({ children }) => {
     );
 };
 
-// Hook per accedere all'AuthContext
+// custom hook to access the AuthContext
 export const useAuth = () => {
+    // get context value from AuthContext
     const context = useContext(AuthContext);
-    if (!context) {
+    if(!context) {
         throw new Error("useAuth must be used within an AuthProvider");
     }
+    // return the context value (user, login(), logout()...)
     return context;
 };

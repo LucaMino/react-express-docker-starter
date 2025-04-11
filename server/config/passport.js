@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from 'passport-local';
-import User from "../models/user.js";
+import User from "../models/user.model.js";
 
 // set up local authentication strategy for passport using email and password
 passport.use

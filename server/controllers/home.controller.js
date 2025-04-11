@@ -1,8 +1,16 @@
-import User from '../models/user.js'
+import User from '../models/user.model.js'
 
-export const getHomeData = async (req, res) => {
-    // retrieve all users
-    const users = await User.findAll({ limit: 5 })
+class HomeController
+{
+    constructor() { }
 
-    res.send(users)
+    async getHomeData(req, res)
+    {
+        // retrieve all users
+        const users = await User.findAll({ limit: 5 })
+        res.send(users)
+    }
 }
+
+// export an instance of the class
+export default new HomeController()

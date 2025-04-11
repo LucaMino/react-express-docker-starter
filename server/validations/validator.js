@@ -4,8 +4,7 @@ export const validate = (req, res, next) => {
     // get errors
     const errors = validationResult(req)
     // if no errors, continue to next middleware
-    if(errors.isEmpty())
-    {
+    if(errors.isEmpty()) {
         return next();
     }
 

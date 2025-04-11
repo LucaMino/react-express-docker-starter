@@ -1,6 +1,4 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-
 import './index.css';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -16,14 +14,6 @@ const App = () => {
     const authRoutes = ['/login', '/register'];
     const { user } = useAuth();
 
-    useEffect(() => {
-        console.log('user1')
-        // const { user } = useAuth();
-
-        console.log('user')
-        console.log(user)
-    }, []);
-
     return (
         <div className='flex flex-col min-h-screen'>
             {!authRoutes.includes(pathname) && <Header />}
@@ -32,10 +22,9 @@ const App = () => {
                     <Route element={<PublicRoute />}>
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
-                        <Route path="/" element={<Home />} />
                     </Route>
                     <Route element={<PrivateRoute />}>
-                        {/* <Route path="/" element={<Home />} /> */}
+                        <Route path="/" element={<Home />} />
                     </Route>
                 </Routes>
             </main>
